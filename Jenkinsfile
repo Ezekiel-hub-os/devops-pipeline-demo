@@ -1,22 +1,26 @@
 pipeline {
-    agent any
+    agent {
+        docker { image 'python:3.10' }  // מריץ בתוך קונטיינר עם פייתון
+    }
+
     stages {
         stage('Clone Repo') {
             steps {
                 echo 'Cloning repository...'
-                // אפשר להוסיף git clone אם תשתמש ב-GitHub
             }
         }
+
         stage('Install Requirements') {
             steps {
                 echo 'Installing requirements...'
-                sh 'pip3 install -r requirements.txt || true'
+                sh 'pip install -r requirements.txt'
             }
         }
+
         stage('Run App') {
             steps {
                 echo 'Running app...'
-                sh 'python3 app.py'
+                sh 'python app.py'
             }
         }
     }
